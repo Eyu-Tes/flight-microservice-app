@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: FlightDomainModel
+  cloud:
+    config:
+      url: http://localhost:8888
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: testdb
