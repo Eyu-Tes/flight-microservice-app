@@ -1,14 +1,10 @@
-#airLabs:
-#  base-url: https://airlabs.co
-#  api-key: 0fb2580c-4386-4490-a96a-ba0db985d7cf
-
-ably:
-  api_key: j_jisg.Aqceeg:qhfWO43y85Wjg0z2R337U9WFrkfdJ_bvXvMAcDpW_1M
-  channel: channel-name
+opensky:
+  base-url: https://opensky-network.org
 
 # Kafka Producer Configuration
 spring:
   kafka:
     producer:
+      topic: rtds_flight
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
