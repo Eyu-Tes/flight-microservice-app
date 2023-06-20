@@ -17,9 +17,13 @@ public class RtdisService implements IRtdisService{
     @Value("${spring.kafka.producer.topic}")
     private String kafkaTopic;
 
-    @Scheduled(fixedRate = 1000000)
+    private long startTime = 1514815200;
+
+    @Scheduled(fixedRate = 10000)
     public void fetchFlight() {
-        String response = restTemplate.getForObject(baseUrl+"/api/flights/all?begin=1517227200&end=1517228200", String.class);
+        startTime = startTime + 1020;
+        long endTime = startTime + 1020;
+        String response = restTemplate.getForObject(baseUrl+"/api/flights/all?begin="+startTime+"&end="+endTime, String.class);
         sender.send(kafkaTopic, response);
     }
 }
