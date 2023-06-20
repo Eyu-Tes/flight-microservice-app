@@ -1,7 +1,5 @@
 package com.example.rtdis.service;
 
-import com.example.rtdis.domain.Flight;
-import com.example.rtdis.domain.Flights;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -9,9 +7,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class Sender {
     @Autowired
-    private KafkaTemplate<String, Flights> kafkaTemplate;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
-    public void send(String topic, Flights flights){
-        kafkaTemplate.send(topic, flights);
+    public void send(String topic, String object){
+        kafkaTemplate.send(topic, object);
     }
 }
