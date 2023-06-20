@@ -9,6 +9,11 @@ spring:
       host: localhost
       port: 27017
       database: testdb
+  kafka:
+    consumer:
+      topic: rtds_flight
+      key-serializer: org.apache.kafka.common.serialization.StringDeSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    properties:
+      spring.json.trusted.packages: "*"
 
-kafka:
-  topic: rtds_flight
