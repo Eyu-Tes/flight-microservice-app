@@ -9,3 +9,6 @@ spring:
       host: localhost
       port: 27017
       database: testdb
+
+kafka:
+  topic: rtds_flight
