@@ -1,5 +1,5 @@
-#airLabs:
-#  base-url: https://airlabs.co
+opensky:
+  base-url: https://opensky-network.org
 #  api-key: 0fb2580c-4386-4490-a96a-ba0db985d7cf
 
 ably:

@@ -28,10 +28,10 @@ public class RtdisService implements IRtdisService{
 //    @Value("${airLabs.base-url}")
 //    private String baseUrl;
 
-    @Value("${ably.api_key}")
-    private String apiKey;
-    @Value("${ably.channel}")
-    private String channel;
+//    @Value("${ably.api_key}")
+//    private String apiKey;
+//    @Value("${ably.channel}")
+//    private String channel;
 
     @Scheduled(fixedRate = 100000)
     public void fetchFlight() {
@@ -56,18 +56,22 @@ public class RtdisService implements IRtdisService{
 //        List<Map<String, Object>> flightData = (List<Map<String, Object>>) responseBody.get("response");
 
 
-        String encodedChannel = UriUtils.encodePathSegment(channel, StandardCharsets.UTF_8);
+//        String encodedChannel = UriUtils.encodePathSegment(channel, StandardCharsets.UTF_8);
 
+//        RestTemplate restTemplate = new RestTemplate();
+//        String url = "https://rest.ably.io/channels/" + encodedChannel + "/messages";
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setBasicAuth(apiKey);
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://rest.ably.io/channels/" + encodedChannel + "/messages";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBasicAuth(apiKey);
+        String url = "https://opensky-network.org/api/flights/all?begin=1517227200&end=1517230200";
+
+
 
 //        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
 //        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
 //        String response = responseEntity.getBody();
 
-        Flights flightList = restTemplate.getForObject(url, Flights.class, headers);
+        Flights flightList = restTemplate.getForObject(url, Flights.class);
 //        sender.send("flight-stream-topic", flightList);
     }
 }

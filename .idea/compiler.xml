@@ -12,11 +12,6 @@
         <module name="flight-config-service" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="flight-config-service" target="17" />
-      <module name="flight-eureka-service" target="17" />
-      <module name="flight-rtdis" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
