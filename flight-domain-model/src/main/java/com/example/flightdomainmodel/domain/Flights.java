@@ -1,4 +1,4 @@
-package com.example.flightdatadomainview.domain;
+package com.example.flightdomainmodel.domain;
 
 import lombok.Data;
 

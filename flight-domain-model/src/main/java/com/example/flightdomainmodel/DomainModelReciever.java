@@ -1,6 +1,6 @@
-package com.example.flightdatadomainview;
+package com.example.flightdomainmodel;
 
-import com.example.flightdatadomainview.domain.Flight;
+import com.example.flightdomainmodel.domain.Flight;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class DomainViewReciever {
+public class DomainModelReciever {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
     @Autowired

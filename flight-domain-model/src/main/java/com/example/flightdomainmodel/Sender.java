@@ -1,4 +1,4 @@
-package com.example.flightdatadomainview;
+package com.example.flightdomainmodel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;

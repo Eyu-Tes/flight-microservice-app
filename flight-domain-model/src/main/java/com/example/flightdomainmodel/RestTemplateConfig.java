@@ -1,4 +1,4 @@
-package com.example.flightdatadomainview;
+package com.example.flightdomainmodel;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
