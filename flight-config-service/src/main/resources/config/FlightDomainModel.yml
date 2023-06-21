@@ -12,8 +12,20 @@ spring:
   kafka:
     consumer:
       topic: rtds_flight
-      key-serializer: org.apache.kafka.common.serialization.StringDeSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    properties:
-      spring.json.trusted.packages: "*"
+      group-id: gid
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring:
+          deserializer:
+            key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+            value.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      topics:
+        firstSeen: ds_first_seen
+        lastSeen: ds_last_seen
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    bootstrap-servers: localhost:9092
 

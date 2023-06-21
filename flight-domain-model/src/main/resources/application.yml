@@ -1,6 +1,12 @@
 server:
   port: 8093
 
+spring:
+  application:
+    name: FlightDomainModel
+  config:
+    import: optional:configserver:http://localhost:8888
+
 eureka:
   client:
     serviceUrl:

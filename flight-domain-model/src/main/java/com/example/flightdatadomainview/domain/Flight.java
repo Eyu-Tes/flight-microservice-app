@@ -1,4 +1,4 @@
-package com.example.rtdis.domain;
+package com.example.flightdatadomainview.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Flight {
-
           private String icao24;
           private Long firstSeen;
           private String estDepartureAirport;

@@ -1,4 +1,4 @@
-package com.example.rtdis.domain;
+package com.example.flightdatadomainview.domain;
 
 import lombok.Data;
 
