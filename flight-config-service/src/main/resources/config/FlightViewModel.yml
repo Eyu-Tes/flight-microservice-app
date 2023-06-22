@@ -7,12 +7,12 @@ spring:
   kafka:
     consumer:
       topics:
-        firstSeen: ds_firstSeen
-        lastSeen: ds_lastSeen
+        departure: ds_departure
+        arrival: ds_arrival
       group-id: gid
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring:
           deserializer:

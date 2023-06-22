@@ -23,8 +23,8 @@ spring:
             value.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
     producer:
       topics:
-        firstSeen: ds_firstSeen
-        lastSeen: ds_lastSeen
+        arrival: ds_departure
+        departure: ds_arrival
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     bootstrap-servers: localhost:9092
