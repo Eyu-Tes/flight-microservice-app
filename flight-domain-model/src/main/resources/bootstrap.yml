@@ -1,0 +1,3 @@
+spring:
+  appliation:
+    name: Flight-Domain-Model

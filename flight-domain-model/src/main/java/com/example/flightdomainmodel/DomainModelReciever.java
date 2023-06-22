@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class DomainModelReciever {
@@ -23,6 +24,8 @@ public class DomainModelReciever {
     RestTemplate restTemplate;
     @Autowired
     private Sender sender;
+
+    private Logger logger = Logger.getLogger(DomainModelReciever.class.getName());
 
     @KafkaListener(topics = "${spring.kafka.consumer.topic}")
     public void receive(@Payload String msg, @Headers MessageHeaders headers) throws JsonProcessingException {
@@ -49,5 +52,7 @@ public class DomainModelReciever {
         // Step 4: Publish to Kafka topics
         kafkaTemplate.send("ds_firstSeen", firstSeenJson);
         kafkaTemplate.send("ds_lastSeen", lastSeenJson);
+
+        logger.info("received message=" + msg);
     }
 }

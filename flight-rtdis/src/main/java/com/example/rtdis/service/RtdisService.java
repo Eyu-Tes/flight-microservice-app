@@ -1,5 +1,7 @@
 package com.example.rtdis.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,6 +20,9 @@ public class RtdisService implements IRtdisService{
     @Value("${spring.kafka.producer.topic}")
     private String kafkaTopic;
 
+    private static final Logger logger = LoggerFactory.getLogger(RtdisService.class);
+
+
     private long startTime = 1514815200;
 
     private final WebClient webClient = WebClient.create();
@@ -33,5 +38,6 @@ public class RtdisService implements IRtdisService{
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribe(response -> sender.send(kafkaTopic, response));
+        logger.info("Flight data fetched from OpenSky API", startTime, endTime, baseUrl, kafkaTopic);
     }
 }

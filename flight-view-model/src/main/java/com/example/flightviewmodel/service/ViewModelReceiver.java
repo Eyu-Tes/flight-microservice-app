@@ -2,6 +2,8 @@ package com.example.flightviewmodel.service;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.List;
 @Service
 public class ViewModelReceiver {
     private final String excelFile = "flight_data.xlsx";
+    private static final Logger logger = LoggerFactory.getLogger(ViewModelReceiver.class);
+
 
     @KafkaListener(topics = "ds_firstSeen")
     public void receiveFirstSeen(List<Long> values) {
@@ -58,6 +62,7 @@ public class ViewModelReceiver {
         } catch (IOException e) {
             workbook = new XSSFWorkbook();
         }
+        logger.info("Workbook: " + workbook);
         return workbook;
     }
 }
