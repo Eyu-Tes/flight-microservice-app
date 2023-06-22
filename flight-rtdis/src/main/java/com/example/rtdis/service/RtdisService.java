@@ -7,31 +7,38 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Random;
+
 @Service
 public class RtdisService implements IRtdisService{
     @Autowired
     RestTemplate restTemplate;
     @Autowired
     private Sender sender;
-    @Value("${opensky.base-url}")
+    @Value("${externalApi.baseUrl}")
     private String baseUrl;
+    @Value("${externalApi.accessKey}")
+    private String accessUrl;
     @Value("${spring.kafka.producer.topic}")
     private String kafkaTopic;
 
-    private long startTime = 1514815200;
+    private int offset = 0;
+    private int limit;
+    private final int minLimit = 5;
+    private final int maxLimit = 10;
 
     private final WebClient webClient = WebClient.create();
 
     @Scheduled(fixedRate = 10000)
     public void fetchFlight() {
-        startTime = startTime + 1020;
-        long endTime = startTime + 1020;
-//        String response = restTemplate.getForObject(baseUrl+"/api/flights/all?begin="+startTime+"&end="+endTime, String.class);
-//        sender.send(kafkaTopic, response);
+        limit = new Random().nextInt((maxLimit-minLimit)+1)+minLimit;
+
         webClient.get()
-                .uri(baseUrl + "/api/flights/all?begin={startTime}&end={endTime}", startTime, endTime)
+                .uri(baseUrl+"/v1/flights?access_key="+accessUrl+"&offset="+offset+"&limit="+limit)
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribe(response -> sender.send(kafkaTopic, response));
+
+        offset += limit;
     }
 }

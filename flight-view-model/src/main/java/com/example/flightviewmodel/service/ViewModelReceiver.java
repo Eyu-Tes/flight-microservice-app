@@ -1,63 +1,45 @@
 package com.example.flightviewmodel.service;
 
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 @Service
 public class ViewModelReceiver {
-    private final String excelFile = "flight_data.xlsx";
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    @KafkaListener(topics = "ds_firstSeen")
-    public void receiveFirstSeen(List<Long> values) {
-        writeToExcelSheet("firstSeen", values);
+    private CsvWriter departureCsvWriter = new CsvWriter("departure.csv");
+    private CsvWriter arrivalCsvWriter = new CsvWriter("arrival.csv");
+
+    public ViewModelReceiver() throws IOException {
     }
 
-    @KafkaListener(topics = "ds_lastSeen")
-    public void receiveLastSeen(List<Long> values) {
-        writeToExcelSheet("lastSeen", values);
+    @KafkaListener(topics = "ds_departure")
+    public void receiveDepartureMsgs(@Payload String values) throws IOException {
+//        JsonNode jsonNode = objectMapper.readTree(values);
+//        List<String> stringList = new ArrayList<>();
+//        for (JsonNode element : jsonNode) {
+//            String value = element.asText();
+//            stringList.add(value);
+//        }
+        List<String> stringList = objectMapper.readValue(values, new TypeReference<>() {});
+
+        // Append the data to the respective CSV file based on the topic
+        departureCsvWriter.appendData(stringList);
     }
 
-    private void writeToExcelSheet(String sheetName, List<Long> values) {
-        try (Workbook workbook = getOrCreateWorkbook()) {
-            Sheet sheet = workbook.getSheet(sheetName);
-            if (sheet == null) {
-                sheet = workbook.createSheet(sheetName);
-            }
+    @KafkaListener(topics = "ds_arrival")
+    public void receiveArrivalMsgs(@Payload String values) throws IOException {
+        List<String> stringList = objectMapper.readValue(values, new TypeReference<>() {});
 
-//            int lastRowNum = sheet.getLastRowNum();
-//            for (int i = 0; i < values.size(); i++) {
-//                Row row = sheet.createRow(lastRowNum + i + 1);
-//                Cell cell = row.createCell(0);
-//                cell.setCellValue(values.get(i));
-//            }
-
-            int lastRowNum = sheet.getLastRowNum();
-            Row row = sheet.createRow(lastRowNum + 1);
-            Cell cell = row.createCell(0);
-            cell.setCellValue("abc");
-
-            FileOutputStream outputStream = new FileOutputStream(excelFile);
-            workbook.write(outputStream);
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Workbook getOrCreateWorkbook() {
-        Workbook workbook;
-        try {
-            workbook = WorkbookFactory.create(new File(excelFile));
-        } catch (IOException e) {
-            workbook = new XSSFWorkbook();
-        }
-        return workbook;
+        // Append the data to the respective CSV file based on the topic
+        arrivalCsvWriter.appendData(stringList);
     }
 }

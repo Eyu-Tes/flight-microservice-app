@@ -1,5 +1,6 @@
-opensky:
-  base-url: https://opensky-network.org
+externalApi:
+  baseUrl: http://api.aviationstack.com
+  accessKey: 4a18359744e6bae6aa7953abb1db928f
 
 # Kafka Producer Configuration
 spring:
