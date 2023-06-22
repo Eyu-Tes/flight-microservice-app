@@ -1,6 +1,6 @@
 externalApi:
   baseUrl: http://api.aviationstack.com
-  accessKey: 4a18359744e6bae6aa7953abb1db928f
+  accessKey: 6a2fb8052e7fb96c6de90ac399c930fc
 
 # Kafka Producer Configuration
 spring:
